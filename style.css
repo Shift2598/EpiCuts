@@ -105,6 +105,23 @@ img {
 .logo-icon {
     font-size: 1.4rem;
 }
+.icon-img {
+    height: 1em;
+    vertical-align: middle;
+    display: inline-block;
+}
+.logo .icon-img,
+.footer-logo .icon-img {
+    height: 28px;
+    width: auto;
+}
+.hero-badge .icon-img {
+    height: 18px;
+}
+.popup-icon .icon-img {
+    height: 48px;
+    width: auto;
+}
 
 .nav-links {
     display: flex;
