@@ -26,7 +26,6 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: {
-    secure: true,
     maxAge: 24 * 60 * 60 * 1000,
     sameSite: 'lax'
   }
@@ -43,6 +42,11 @@ app.use('/admin', adminRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+app.use((err, req, res, next) => {
+  console.error('Server error:', err.message, err.stack);
+  res.status(500).send('Server error: ' + err.message);
 });
 
 app.listen(PORT, () => {

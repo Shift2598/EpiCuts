@@ -22,13 +22,23 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  const { username, password } = req.body;
-  const admin = db.prepare('SELECT * FROM admin WHERE username = ?').get(username);
-  if (!admin || !bcrypt.compareSync(password, admin.password)) {
-    return res.render('admin/login', { error: 'Invalid username or password' });
+  try {
+    const { username, password } = req.body;
+    console.log('Login attempt:', username);
+    const admin = db.prepare('SELECT * FROM admin WHERE username = ?').get(username);
+    console.log('Admin found:', !!admin);
+    if (!admin || !bcrypt.compareSync(password, admin.password)) {
+      return res.render('admin/login', { error: 'Invalid username or password' });
+    }
+    req.session.adminId = admin.id;
+    req.session.save((err) => {
+      if (err) console.error('Session save error:', err);
+      res.redirect('/admin');
+    });
+  } catch (err) {
+    console.error('Login error:', err.message, err.stack);
+    res.render('admin/login', { error: 'Server error: ' + err.message });
   }
-  req.session.adminId = admin.id;
-  res.redirect('/admin');
 });
 
 router.get('/logout', (req, res) => {
