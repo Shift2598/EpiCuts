@@ -83,6 +83,10 @@ if (!emailCols.includes('sendgrid_api_key')) {
 if (!emailCols.includes('sendgrid_from_email')) {
   db.exec("ALTER TABLE email_config ADD COLUMN sendgrid_from_email TEXT DEFAULT ''");
 }
+if (!emailCols.includes('resend_api_key')) {
+  db.exec("ALTER TABLE email_config ADD COLUMN resend_api_key TEXT DEFAULT ''");
+  db.exec("ALTER TABLE email_config ADD COLUMN resend_from_email TEXT DEFAULT ''");
+}
 
 // Seed default email config if not exists
 const emailConfigExists = db.prepare('SELECT id FROM email_config').get();
