@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/header.php';
-adminHeader('Messages', 'contacts');
 
 $pdo = getDB();
 
@@ -10,6 +9,8 @@ if (isset($_POST['delete'], $_POST['id'])) {
   header('Location: contacts.php');
   exit;
 }
+
+adminHeader('Messages', 'contacts');
 
 $contacts = $pdo->query("SELECT * FROM contacts ORDER BY created_at DESC")->fetchAll();
 ?>

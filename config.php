@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
-define('DB_NAME', getenv('DB_NAME') ?: 'epicuts');
-define('DB_USER', getenv('DB_USER') ?: 'root');
-define('DB_PASS', getenv('DB_PASS') ?: '');
+define('DB_HOST', 'sql308.infinityfree.com');
+define('DB_NAME', 'if0_42074968_epicuts');
+define('DB_USER', 'if0_42074968');
+define('DB_PASS', 'QO5JCJOX7B7fQk');
 
 function getDB() {
   static $pdo = null;

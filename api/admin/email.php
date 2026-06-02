@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/header.php';
-adminHeader('Email', 'email');
 
 $pdo = getDB();
+$success = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $host = $_POST['host'] ?? 'smtp.gmail.com';
@@ -22,10 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $success = 'Email settings saved!';
 }
 
+adminHeader('Email', 'email');
+
 $config = $pdo->query("SELECT * FROM email_config WHERE id = 1")->fetch() ?: [];
 ?>
 <div class="top-bar"><h1>Email Settings</h1></div>
-<?php if (isset($success)): ?><div class="success"><?=$success?></div><?php endif; ?>
+<?php if ($success): ?><div class="success"><?=$success?></div><?php endif; ?>
 <div class="form-card">
   <form method="POST">
     <div class="toggle-group">

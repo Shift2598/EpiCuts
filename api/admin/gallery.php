@@ -1,11 +1,9 @@
 <?php
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/header.php';
-adminHeader('Gallery', 'gallery');
 
 $pdo = getDB();
 
-// Handle add/edit/delete
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['delete'], $_POST['id'])) {
     $pdo->prepare("DELETE FROM gallery_images WHERE id = ?")->execute([(int)$_POST['id']]);
@@ -28,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   if (isset($_POST['id']) && $_POST['id'] > 0) {
-    // Edit
     $id = (int)$_POST['id'];
     if ($url) {
       $pdo->prepare("UPDATE gallery_images SET title=?, subtitle=?, image_url=? WHERE id=?")->execute([$title, $subtitle, $url, $id]);
@@ -36,13 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $pdo->prepare("UPDATE gallery_images SET title=?, subtitle=? WHERE id=?")->execute([$title, $subtitle, $id]);
     }
   } elseif ($title && $url) {
-    // Add
     $max = $pdo->query("SELECT COALESCE(MAX(sort_order),0) as m FROM gallery_images")->fetch();
     $pdo->prepare("INSERT INTO gallery_images (title, subtitle, image_url, sort_order) VALUES (?,?,?,?)")->execute([$title, $subtitle, $url, ($max['m']??0)+1]);
   }
   header('Location: gallery.php');
   exit;
 }
+
+adminHeader('Gallery', 'gallery');
 
 $editImage = null;
 if (isset($_GET['edit'])) {

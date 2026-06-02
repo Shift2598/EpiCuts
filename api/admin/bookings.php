@@ -1,11 +1,9 @@
 <?php
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/header.php';
-adminHeader('Bookings', 'bookings');
 
 $pdo = getDB();
 
-// Handle status update
 if (isset($_POST['action'], $_POST['id'])) {
   $id = (int)$_POST['id'];
   if ($_POST['action'] === 'delete') {
@@ -16,6 +14,8 @@ if (isset($_POST['action'], $_POST['id'])) {
   header('Location: bookings.php');
   exit;
 }
+
+adminHeader('Bookings', 'bookings');
 
 $status = $_GET['status'] ?? '';
 if ($status) {

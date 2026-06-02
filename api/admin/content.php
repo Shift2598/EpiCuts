@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/header.php';
-adminHeader('Content', 'content');
 
 $pdo = getDB();
 
@@ -10,6 +9,8 @@ if (isset($_POST['id'], $_POST['value'])) {
   header('Location: content.php');
   exit;
 }
+
+adminHeader('Content', 'content');
 
 $content = $pdo->query("SELECT * FROM content ORDER BY section, id")->fetchAll();
 $grouped = [];
