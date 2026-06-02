@@ -106,21 +106,9 @@ img {
     font-size: 1.4rem;
 }
 .icon-img {
-    height: 0.75em;
+    height: 1em;
     vertical-align: middle;
     display: inline-block;
-}
-.logo .icon-img,
-.footer-logo .icon-img {
-    height: 20px;
-    width: auto;
-}
-.hero-badge .icon-img {
-    height: 14px;
-}
-.popup-icon .icon-img {
-    height: 36px;
-    width: auto;
 }
 
 .nav-links {
