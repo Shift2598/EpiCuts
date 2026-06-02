@@ -106,20 +106,20 @@ img {
     font-size: 1.4rem;
 }
 .icon-img {
-    height: 1em;
+    height: 0.75em;
     vertical-align: middle;
     display: inline-block;
 }
 .logo .icon-img,
 .footer-logo .icon-img {
-    height: 28px;
+    height: 20px;
     width: auto;
 }
 .hero-badge .icon-img {
-    height: 18px;
+    height: 14px;
 }
 .popup-icon .icon-img {
-    height: 48px;
+    height: 36px;
     width: auto;
 }
 
