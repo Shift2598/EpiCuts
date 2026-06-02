@@ -13,30 +13,32 @@ function generateICS($booking) {
 
 function sendMail($to, $subject, $html, $ics = null) {
   $config = getEmailConfig();
-  if (!$config || !$config['enabled'] || !$config['user']) return false;
+  if (!$config || !$config['enabled']) return false;
 
-  // Try PHPMailer if available (via Composer)
+  $from = $config['user'] ?: ($config['notify_email'] ?: 'noreply@epicuts.com');
+
+  // Try PHPMailer if installed via Composer
   if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
     try {
       require_once __DIR__ . '/../vendor/autoload.php';
       $mail = new PHPMailer\PHPMailer\PHPMailer(true);
-      $mail->isSMTP();
-      $mail->Host = $config['host'] ?: 'smtp.gmail.com';
-      $mail->Port = (int)($config['port'] ?: 587);
-      $mail->SMTPAuth = true;
-      $mail->Username = $config['user'];
-      $mail->Password = $config['pass'];
-      $mail->SMTPSecure = $mail->Port == 465 ? 'ssl' : 'tls';
-      $mail->setFrom($config['user'], 'EpiCuts');
+      if ($config['user']) {
+        $mail->isSMTP();
+        $mail->Host = $config['host'] ?: 'smtp.gmail.com';
+        $mail->Port = (int)($config['port'] ?: 587);
+        $mail->SMTPAuth = true;
+        $mail->Username = $config['user'];
+        $mail->Password = $config['pass'];
+        $mail->SMTPSecure = $mail->Port == 465 ? 'ssl' : 'tls';
+      }
+      $mail->setFrom($from, 'EpiCuts');
       $mail->addAddress($to);
       $mail->Subject = $subject;
       $mail->isHTML(true);
       $mail->Body = $html;
-
       if ($ics) {
         $mail->addStringAttachment($ics, 'appointment.ics', 'base64', 'text/calendar');
       }
-
       $mail->send();
       return true;
     } catch (Exception $e) {
@@ -47,19 +49,13 @@ function sendMail($to, $subject, $html, $ics = null) {
 
   // Fallback to PHP mail()
   $boundary = md5(time());
-  $headers = "From: {$config['user']}\r\n";
+  $headers = "From: {$from}\r\n";
   $headers .= "MIME-Version: 1.0\r\n";
   $headers .= "Content-Type: multipart/mixed; boundary=\"{$boundary}\"\r\n";
-
-  $body = "--{$boundary}\r\n";
-  $body .= "Content-Type: text/html; charset=UTF-8\r\n\r\n{$html}\r\n\r\n";
-
+  $body = "--{$boundary}\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n{$html}\r\n\r\n";
   if ($ics) {
-    $body .= "--{$boundary}\r\n";
-    $body .= "Content-Type: text/calendar; method=REQUEST\r\n";
-    $body .= "Content-Disposition: attachment; filename=\"appointment.ics\"\r\n\r\n{$ics}\r\n\r\n";
+    $body .= "--{$boundary}\r\nContent-Type: text/calendar; method=REQUEST\r\nContent-Disposition: attachment; filename=\"appointment.ics\"\r\n\r\n{$ics}\r\n\r\n";
   }
-
   $body .= "--{$boundary}--";
   return mail($to, $subject, $body, $headers);
 }
@@ -94,7 +90,7 @@ function sendBookingNotification($booking, $baseUrl) {
 
 function sendCustomerConfirmation($booking) {
   $config = getEmailConfig();
-  if (!$config || !$config['enabled'] || !$config['user']) return false;
+  if (!$config || !$config['enabled']) return false;
 
   $ics = generateICS($booking);
   $html = "<div style=\"font-family:sans-serif;max-width:600px;margin:0 auto;background:#111;color:#e0e0e0;border:2px solid #d4a843;padding:32px\">
@@ -112,7 +108,7 @@ function sendCustomerConfirmation($booking) {
 
 function sendCustomerDecline($booking) {
   $config = getEmailConfig();
-  if (!$config || !$config['enabled'] || !$config['user']) return false;
+  if (!$config || !$config['enabled']) return false;
 
   $html = "<div style=\"font-family:sans-serif;max-width:600px;margin:0 auto;background:#111;color:#e0e0e0;border:2px solid #d4a843;padding:32px\">
     <h1 style=\"font-family:Oswald,sans-serif;color:#c0392b;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px\">Sorry, unavailable</h1>
