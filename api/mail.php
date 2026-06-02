@@ -52,7 +52,7 @@ function smtpSend($to, $subject, $html, $ics = null) {
   $reads($fp);
 
   $boundary = md5(time());
-  $headers = "From: EpiCuts Barber <{$from}>\r\nReply-To: {$from}\r\nMIME-Version: 1.0\r\nContent-Type: multipart/mixed; boundary=\"{$boundary}\"\r\n";
+  $headers = "From: EpiCuts Barber <{$from}>\r\nReply-To: {$from}\r\nSubject: {$subject}\r\nMIME-Version: 1.0\r\nContent-Type: multipart/mixed; boundary=\"{$boundary}\"\r\n";
   $body = "--{$boundary}\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n{$html}\r\n\r\n";
   if ($ics) {
     $body .= "--{$boundary}\r\nContent-Type: text/calendar; method=REQUEST\r\nContent-Disposition: attachment; filename=\"appointment.ics\"\r\n\r\n{$ics}\r\n\r\n";
