@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $enabled = isset($_POST['enabled']) ? 1 : 0;
 
   $stmt = $pdo->prepare("SELECT id FROM email_config WHERE id = 1");
+  $stmt->execute();
   if ($stmt->fetch()) {
     $pdo->prepare("UPDATE email_config SET host=?, port=?, `user`=?, `pass`=?, notify_email=?, enabled=? WHERE id=1")->execute([$host, $port, $user, $pass, $notify_email, $enabled]);
   } else {
