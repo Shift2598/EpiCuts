@@ -68,8 +68,8 @@ function sendBookingNotification($booking, $baseUrl) {
   $config = getEmailConfig();
   if (!$config || !$config['enabled'] || !$config['notify_email']) return false;
 
-  $confirmUrl = "{$baseUrl}/api/bookings/{$booking['confirmation_token']}/confirm.php";
-  $declineUrl = "{$baseUrl}/api/bookings/{$booking['confirmation_token']}/decline.php";
+  $confirmUrl = "{$baseUrl}/api/bookings/confirm.php?token={$booking['confirmation_token']}";
+  $declineUrl = "{$baseUrl}/api/bookings/decline.php?token={$booking['confirmation_token']}";
   $ics = generateICS($booking);
 
   $html = "<div style=\"font-family:sans-serif;max-width:600px;margin:0 auto;background:#111;color:#e0e0e0;border:2px solid #d4a843;padding:32px\">

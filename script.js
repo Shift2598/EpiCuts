@@ -121,7 +121,7 @@ contactForm.addEventListener('submit', (e) => {
     const formData = new FormData(contactForm);
     const data = Object.fromEntries(formData.entries());
 
-    fetch('/api/bookings', {
+    fetch('/api/bookings.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -249,7 +249,7 @@ setTimeout(() => {
 }, 15000);
 
 // Load gallery from API
-fetch('/api/gallery')
+fetch('/api/gallery.php')
     .then(res => res.json())
     .then(images => {
         const grid = document.getElementById('galleryGrid');

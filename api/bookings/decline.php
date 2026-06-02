@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../config.php';
 
-$token = $_GET['token'] ?? basename($_SERVER['REQUEST_URI'], '/decline');
+$token = $_GET['token'] ?? '';
 
 $pdo = getDB();
 $stmt = $pdo->prepare("SELECT * FROM bookings WHERE confirmation_token = ?");
