@@ -1,0 +1,7 @@
+{
+  "name": "epicuts/backend",
+  "description": "EpiCuts barber shop website",
+  "require": {
+    "phpmailer/phpmailer": "^6.9"
+  }
+}

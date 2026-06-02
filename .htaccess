@@ -1,0 +1,32 @@
+RewriteEngine On
+
+# Rewrite API URLs to PHP files
+RewriteRule ^api/bookings/([^/]+)/(confirm|decline)$ api/bookings/$2.php?token=$1 [L,QSA]
+RewriteRule ^api/bookings$ api/bookings.php [L,QSA]
+RewriteRule ^api/contact$ api/contact.php [L,QSA]
+RewriteRule ^api/content$ api/content.php [L,QSA]
+RewriteRule ^api/gallery$ api/gallery.php [L,QSA]
+
+# Admin panel
+RewriteRule ^admin$ api/admin/index.php [L]
+RewriteRule ^admin/$ api/admin/index.php [L]
+RewriteRule ^admin/login$ api/admin/login.php [L]
+RewriteRule ^admin/logout$ api/admin/logout.php [L]
+RewriteRule ^admin/bookings$ api/admin/bookings.php [L]
+RewriteRule ^admin/contacts$ api/admin/contacts.php [L]
+RewriteRule ^admin/gallery$ api/admin/gallery.php [L]
+RewriteRule ^admin/content$ api/admin/content.php [L]
+RewriteRule ^admin/email$ api/admin/email.php [L]
+
+# If requested file or directory exists, serve it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ $1 [L]
+
+# Security
+<FilesMatch "\.(sql|md|json|lock)$">
+  Deny from all
+</FilesMatch>
+<FilesMatch "^(config|init_db)\.php$">
+  Deny from all
+</FilesMatch>
