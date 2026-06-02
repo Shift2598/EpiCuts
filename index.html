@@ -11,9 +11,9 @@
 <body>
     <div class="top-bar">
         <div class="container">
-            <span>&#9742; (555) 123-4567</span>
-            <span>&#9202; Tue-Sat: 9AM - 7PM</span>
-            <span>&#9873; 123 Main Street, Downtown</span>
+            <span id="topPhone">&#9742; (555) 123-4567</span>
+            <span id="topHours">&#9202; Tue-Sat: 9AM - 7PM</span>
+            <span id="topAddress">&#9873; 123 Main Street, Downtown</span>
         </div>
     </div>
 
@@ -21,7 +21,7 @@
         <div class="nav-container">
             <a href="#home" class="logo">
                 <span class="logo-icon">&#9986;</span>
-                EPI<span>CUTS</span>
+                <span id="logoText">EPI</span><span id="logoAccent">CUTS</span>
             </a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Home</a></li>
@@ -42,7 +42,7 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="hero-badge">&#9986; EST. 2015 &#9986;</div>
-            <h1>EPI<br><span>CUTS</span></h1>
+            <h1><span id="heroLogo">EPI</span><br><span id="heroAccent">CUTS</span></h1>
             <p class="hero-subtext">Be the next pogi in town</p>
             <div class="hero-buttons">
                 <a href="#contact" class="btn-primary">Book an Appointment</a>
@@ -308,21 +308,22 @@
                             <div class="detail-icon">&#9873;</div>
                             <div>
                                 <strong>Location</strong>
-                                <span>123 Main Street, Downtown</span>
+                                <span id="contactAddress">123 Main Street, Downtown</span>
                             </div>
                         </div>
                         <div class="detail-item">
                             <div class="detail-icon">&#9202;</div>
                             <div>
                                 <strong>Hours</strong>
-                                <span>Tue - Sat: 9AM - 7PM<br>Sun: 10AM - 4PM<br>Mon: Closed</span>
+                                <span id="contactHours">Tue - Sat: 9AM - 7PM<br>Sun: 10AM - 4PM<br>Mon: Closed</span>
                             </div>
                         </div>
                         <div class="detail-item">
                             <div class="detail-icon">&#9742;</div>
                             <div>
                                 <strong>Contact</strong>
-                                <span>(555) 123-4567<br>hello@christcuts.com</span>
+                                <span id="contactPhone">(555) 123-4567</span><br>
+                                <span id="contactEmail">hello@epicuts.com</span>
                             </div>
                         </div>
                     </div>
@@ -369,7 +370,7 @@
                 <div class="footer-brand">
                     <div class="footer-logo">
                         <span class="logo-icon">&#9986;</span>
-                        EPI<span>CUTS</span>
+                        <span id="footerLogo">EPI</span><span id="footerAccent">CUTS</span>
                     </div>
                     <p>Precision cuts. Modern style. Traditional service.</p>
                     <div class="social-links">

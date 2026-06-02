@@ -96,6 +96,12 @@ try {
       ['gallery', 'subtitle', 'Every cut tells a story'],
       ['contact', 'title', 'Get in Touch'],
       ['contact', 'subtitle', 'Ready for a fresh cut? Book your appointment or just walk in.'],
+      ['contact', 'address', '123 Main Street, Downtown'],
+      ['contact', 'phone', '(555) 123-4567'],
+      ['contact', 'email', 'hello@epicuts.com'],
+      ['general', 'logo', 'EPI'],
+      ['general', 'logo_accent', 'CUTS'],
+      ['general', 'hours', 'Tue - Sat: 9AM - 7PM | Sun: 10AM - 4PM | Mon: Closed'],
     ];
     $stmt = $pdo->prepare("INSERT IGNORE INTO content (section, `key`, value) VALUES (?, ?, ?)");
     foreach ($content as $row) {

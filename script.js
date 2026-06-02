@@ -102,6 +102,41 @@ staggerGrids.forEach(grid => {
     });
 });
 
+// Load dynamic content from API
+fetch('/api/content.php')
+  .then(res => res.json())
+  .then(items => {
+    const map = {};
+    items.forEach(item => { map[item.section + '_' + item.key] = item.value; });
+    if (map.general_logo) {
+      document.querySelectorAll('#logoText, #heroLogo, #footerLogo').forEach(el => el.textContent = map.general_logo);
+    }
+    if (map.general_logo_accent) {
+      document.querySelectorAll('#logoAccent, #heroAccent, #footerAccent').forEach(el => el.textContent = map.general_logo_accent);
+    }
+    if (map.contact_address) {
+      document.querySelectorAll('#topAddress, #contactAddress').forEach(el => {
+        el.innerHTML = (el.id === 'topAddress' ? '&#9873; ' : '') + map.contact_address;
+      });
+    }
+    if (map.contact_phone) {
+      const el = document.getElementById('topPhone');
+      if (el) el.innerHTML = '&#9742; ' + map.contact_phone;
+      const el2 = document.getElementById('contactPhone');
+      if (el2) el2.textContent = map.contact_phone;
+    }
+    if (map.contact_email) {
+      const el = document.getElementById('contactEmail');
+      if (el) el.textContent = map.contact_email;
+    }
+    if (map.general_hours) {
+      document.querySelectorAll('#topHours, #contactHours').forEach(el => {
+        el.innerHTML = (el.id === 'topHours' ? '&#9202; ' : '') + map.general_hours.replace(/\|/g, '<br>');
+      });
+    }
+  })
+  .catch(() => {});
+
 // Form submission - native POST (bypasses Infinity Free security)
 const contactForm = document.getElementById('contactForm');
 contactForm.setAttribute('action', '/api/bookings.php');
