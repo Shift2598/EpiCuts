@@ -858,6 +858,8 @@ section[id] {
     grid-template-columns: 1fr 1fr;
     gap: 80px;
     align-items: start;
+    position: relative;
+    z-index: 1;
 }
 
 .contact-info .section-label {
@@ -925,6 +927,8 @@ section[id] {
     background: var(--card);
     border: 3px solid var(--gold);
     padding: 44px;
+    position: relative;
+    z-index: 2;
 }
 
 .contact-form h3 {
