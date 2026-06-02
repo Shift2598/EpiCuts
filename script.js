@@ -283,9 +283,10 @@ if (monthSelect && daySelect && timeSelect) {
         }
     }
 
-    function populateTimes() {
+    function populateTimes(bookedTimes) {
         timeSelect.innerHTML = '<option value="" disabled selected>Time</option>';
         const slots = ['09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30'];
+        const booked = bookedTimes || [];
         slots.forEach(t => {
             const opt = document.createElement('option');
             opt.value = t;
@@ -293,16 +294,38 @@ if (monthSelect && daySelect && timeSelect) {
             const hour = parseInt(h);
             const ampm = hour >= 12 ? 'PM' : 'AM';
             const display = `${hour > 12 ? hour - 12 : hour}:${m} ${ampm}`;
-            opt.textContent = display;
+            if (booked.includes(t)) {
+                opt.disabled = true;
+                opt.textContent = display + ' (Booked)';
+            } else {
+                opt.textContent = display;
+            }
             timeSelect.appendChild(opt);
         });
     }
 
+    function fetchAvailability() {
+        if (monthSelect.value && daySelect.value) {
+            const year = new Date().getFullYear();
+            const date = `${year}-${monthSelect.value}-${daySelect.value}`;
+            fetch('/api/availability.php?date=' + date)
+                .then(res => res.json())
+                .then(booked => { populateTimes(booked); })
+                .catch(() => { populateTimes(); });
+        } else {
+            populateTimes();
+        }
+    }
+
     monthSelect.addEventListener('change', () => {
         populateDays();
+        fetchAvailability();
         updateHidden();
     });
-    daySelect.addEventListener('change', updateHidden);
+    daySelect.addEventListener('change', () => {
+        fetchAvailability();
+        updateHidden();
+    });
     timeSelect.addEventListener('change', updateHidden);
 
     function updateHidden() {
