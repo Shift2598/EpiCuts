@@ -123,8 +123,8 @@ contactForm.addEventListener('submit', (e) => {
 
     fetch('/api/bookings.php', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data).toString()
     })
     .then(res => res.json())
     .then(result => {
