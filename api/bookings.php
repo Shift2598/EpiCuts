@@ -42,6 +42,16 @@ if ($method === 'POST') {
     header('Location: /?error=server');
     exit;
   }
+} else if ($_GET['debug'] ?? false) {
+  // Debug: check email config
+  require_once __DIR__ . '/mail.php';
+  $config = getEmailConfig();
+  echo '<pre>';
+  echo 'Enabled: ' . ($config['enabled'] ?? 'not set') . "\n";
+  echo 'Notify Email: ' . ($config['notify_email'] ?? 'not set') . "\n";
+  echo 'SMTP User: ' . ($config['user'] ?? 'not set') . "\n";
+  echo 'mail() available: ' . (function_exists('mail') ? 'yes' : 'no') . "\n";
+  echo '</pre>';
 } else {
   // GET: return empty array
   header('Content-Type: application/json');
