@@ -75,18 +75,7 @@ if (!cols.includes('notified')) {
   db.exec("ALTER TABLE bookings ADD COLUMN notified INTEGER DEFAULT 0");
 }
 
-// Migrate: add sendgrid columns to email_config if missing
-const emailCols = db.prepare("PRAGMA table_info(email_config)").all().map(c => c.name);
-if (!emailCols.includes('sendgrid_api_key')) {
-  db.exec("ALTER TABLE email_config ADD COLUMN sendgrid_api_key TEXT DEFAULT ''");
-}
-if (!emailCols.includes('sendgrid_from_email')) {
-  db.exec("ALTER TABLE email_config ADD COLUMN sendgrid_from_email TEXT DEFAULT ''");
-}
-if (!emailCols.includes('resend_api_key')) {
-  db.exec("ALTER TABLE email_config ADD COLUMN resend_api_key TEXT DEFAULT ''");
-  db.exec("ALTER TABLE email_config ADD COLUMN resend_from_email TEXT DEFAULT ''");
-}
+
 
 // Seed default email config if not exists
 const emailConfigExists = db.prepare('SELECT id FROM email_config').get();

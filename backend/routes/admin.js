@@ -176,60 +176,21 @@ router.get('/email', requireAuth, (req, res) => {
 });
 
 router.post('/email', requireAuth, (req, res) => {
-  const { host, port, user, pass, notify_email, enabled, sendgrid_api_key, sendgrid_from_email, resend_api_key, resend_from_email } = req.body;
-  db.prepare(`
-    UPDATE email_config SET host=?, port=?, user=?, pass=?, notify_email=?, enabled=?, sendgrid_api_key=?, sendgrid_from_email=?, resend_api_key=?, resend_from_email=? WHERE id=1
-  `).run(host || 'smtp.gmail.com', parseInt(port) || 465, user || '', pass || '', notify_email || '', enabled ? 1 : 0, sendgrid_api_key || '', sendgrid_from_email || '', resend_api_key || '', resend_from_email || '');
+  const { host, port, user, pass, notify_email, enabled } = req.body;
+  db.prepare('UPDATE email_config SET host=?, port=?, user=?, pass=?, notify_email=?, enabled=? WHERE id=1')
+    .run(host || 'smtp.gmail.com', parseInt(port) || 587, user || '', pass || '', notify_email || '', enabled ? 1 : 0);
   const config = db.prepare('SELECT * FROM email_config WHERE id = 1').get() || {};
   res.render('admin/email', { config, success: 'Email settings saved!' });
 });
 
 router.post('/email/test', requireAuth, async (req, res) => {
   const config = db.prepare('SELECT * FROM email_config WHERE id = 1').get() || {};
-  const notifyTo = config.notify_email || config.user || config.resend_from_email;
-
-  // Try Resend
-  const resendKey = config.resend_api_key && config.resend_api_key.trim();
-  if (resendKey) {
-    try {
-      const { Resend } = require('resend');
-      const resend = new Resend(resendKey);
-      await resend.emails.send({
-        from: config.resend_from_email || 'onboarding@resend.dev',
-        to: notifyTo,
-        subject: 'EpiCuts - Test Email',
-        html: '<p>If you see this, Resend is working!</p>',
-      });
-      return res.json({ success: true, message: 'Resend test email sent!' });
-    } catch (err) {
-      return res.json({ success: false, message: err.message });
-    }
-  }
-
-  // Try SendGrid
-  const sgKey = config.sendgrid_api_key && config.sendgrid_api_key.trim();
-  if (sgKey) {
-    try {
-      const sgMail = require('@sendgrid/mail');
-      sgMail.setApiKey(sgKey);
-      await sgMail.send({
-        to: notifyTo,
-        from: config.sendgrid_from_email || config.user || 'test@epicuts.com',
-        subject: 'EpiCuts - Test Email',
-        html: '<p>If you see this, SendGrid is working!</p>'
-      });
-      return res.json({ success: true, message: 'SendGrid test email sent!' });
-    } catch (err) {
-      return res.json({ success: false, message: err.message });
-    }
-  }
-
   const nodemailer = require('nodemailer');
   try {
     const transporter = nodemailer.createTransport({
       host: config.host || 'smtp.gmail.com',
-      port: config.port || 465,
-      secure: (config.port || 465) == 465,
+      port: config.port || 587,
+      secure: (config.port || 587) == 465,
       auth: { user: config.user, pass: config.pass },
       connectionTimeout: 5000
     });
