@@ -14,7 +14,8 @@ if ($method === 'POST') {
   $message = trim($input['message'] ?? '');
 
   if (!$name || !$email || !$phone || !$service || !$date || !$time) {
-    jsonResponse(['error' => 'All required fields must be filled'], 400);
+    header('Location: /?error=missing_fields');
+    exit;
   }
 
   try {
@@ -28,7 +29,6 @@ if ($method === 'POST') {
     $stmt->execute([$id]);
     $booking = $stmt->fetch();
 
-    // Send email notification (include confirmation/decline links)
     require_once __DIR__ . '/mail.php';
     $emailed = sendBookingNotification($booking, getBaseUrl());
 
@@ -36,17 +36,14 @@ if ($method === 'POST') {
       $pdo->prepare("UPDATE bookings SET notified = 1 WHERE id = ?")->execute([$booking['id']]);
     }
 
-    jsonResponse([
-      'success' => true,
-      'message' => $emailed
-        ? 'Booking request sent! Check your email for confirmation.'
-        : 'Booking received! We\'ll confirm shortly.'
-    ]);
+    header('Location: /?success=1');
+    exit;
   } catch (Exception $e) {
-    http_response_code(500);
-    jsonResponse(['error' => 'Failed to create booking']);
+    header('Location: /?error=server');
+    exit;
   }
+} else {
+  // GET: return empty array
+  header('Content-Type: application/json');
+  echo '[]';
 }
-
-// GET: list all bookings (for admin)
-$method === 'GET' && jsonResponse([]);

@@ -102,71 +102,10 @@ staggerGrids.forEach(grid => {
     });
 });
 
-// Form submission with better UX
+// Form submission - native POST (bypasses Infinity Free security)
 const contactForm = document.getElementById('contactForm');
-
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const btn = contactForm.querySelector('button[type="submit"]');
-    const originalText = btn.textContent;
-    const originalBg = btn.style.background;
-
-    // Loading state
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
-    btn.style.opacity = '0.7';
-
-    // Submit to backend API
-    const formData = new FormData(contactForm);
-    const data = Object.fromEntries(formData.entries());
-
-    fetch('/api/bookings.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data).toString()
-    })
-    .then(res => res.json())
-    .then(result => {
-        if (result.success) {
-            btn.textContent = 'Request Sent!';
-            btn.style.background = '#2d7a3a';
-            btn.style.color = '#fff';
-            btn.style.opacity = '1';
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = originalBg;
-                btn.style.color = '';
-                btn.disabled = false;
-                contactForm.reset();
-            }, 3000);
-        } else {
-            btn.textContent = 'Error!';
-            btn.style.background = '#c0392b';
-            btn.style.color = '#fff';
-            btn.style.opacity = '1';
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = originalBg;
-                btn.style.color = '';
-                btn.disabled = false;
-            }, 2000);
-        }
-    })
-    .catch(err => {
-        btn.textContent = 'Error!';
-        btn.style.background = '#c0392b';
-        btn.style.color = '#fff';
-        btn.style.opacity = '1';
-        console.error('Booking error:', err);
-        setTimeout(() => {
-            btn.textContent = originalText;
-            btn.style.background = originalBg;
-            btn.style.color = '';
-            btn.disabled = false;
-        }, 2000);
-    });
-});
+contactForm.setAttribute('action', '/api/bookings.php');
+contactForm.setAttribute('method', 'POST');
 
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -343,4 +282,23 @@ if (monthSelect && daySelect && timeSelect) {
 
     populateDays();
     populateTimes();
+}
+
+// Show success/error toast from redirect
+const params = new URLSearchParams(window.location.search);
+if (params.get('success') === '1') {
+    const toast = document.createElement('div');
+    toast.textContent = 'Booking sent! We\'ll confirm shortly.';
+    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#27ae60;color:#fff;padding:16px 32px;font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:1px;z-index:9999;animation:fadeIn 0.3s';
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 4000);
+    history.replaceState({}, '', '/');
+}
+if (params.get('error')) {
+    const toast = document.createElement('div');
+    toast.textContent = 'Something went wrong. Please try again.';
+    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#c0392b;color:#fff;padding:16px 32px;font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:1px;z-index:9999;animation:fadeIn 0.3s';
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 4000);
+    history.replaceState({}, '', '/');
 }
