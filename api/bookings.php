@@ -20,6 +20,15 @@ if ($method === 'POST') {
 
   try {
     $pdo = getDB();
+
+    // Check if time is already booked
+    $stmt = $pdo->prepare("SELECT id FROM bookings WHERE date = ? AND time = ? AND status != 'cancelled'");
+    $stmt->execute([$date, $time]);
+    if ($stmt->fetch()) {
+      header('Location: /?error=time_taken');
+      exit;
+    }
+
     $token = bin2hex(random_bytes(16));
     $stmt = $pdo->prepare("INSERT INTO bookings (name, email, phone, service, date, time, message, confirmation_token) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([$name, $email, $phone, $service, $date, $time, $message, $token]);

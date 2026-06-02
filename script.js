@@ -352,7 +352,14 @@ if (params.get('success') === '1') {
     setTimeout(() => toast.remove(), 4000);
     history.replaceState({}, '', '/');
 }
-if (params.get('error')) {
+if (params.get('error') === 'time_taken') {
+    const toast = document.createElement('div');
+    toast.textContent = 'That time just got booked! Please pick another.';
+    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#c0392b;color:#fff;padding:16px 32px;font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:1px;z-index:9999;animation:fadeIn 0.3s';
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 4000);
+    history.replaceState({}, '', '/');
+} else if (params.get('error')) {
     const toast = document.createElement('div');
     toast.textContent = 'Something went wrong. Please try again.';
     toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#c0392b;color:#fff;padding:16px 32px;font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:1px;z-index:9999;animation:fadeIn 0.3s';
