@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EpiCuts Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --gold: #d4a843; --dark: #0a0a0a; --darker: #050505; --card: #111; --text: #e0e0e0; --text-muted: #999; --red: #c0392b; --green: #27ae60; }
+body { font-family: 'Inter', sans-serif; background: var(--darker); color: var(--text); display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+.login-box { background: var(--card); border: 2px solid var(--gold); padding: 48px 40px; width: 100%; max-width: 400px; }
+.login-box h1 { font-family: 'Oswald', sans-serif; font-size: 2rem; color: #fff; text-transform: uppercase; letter-spacing: 2px; text-align: center; margin-bottom: 8px; }
+.login-box h1 span { color: var(--gold); }
+.login-box p { text-align: center; color: var(--text-muted); margin-bottom: 32px; font-size: 0.9rem; }
+.error { background: rgba(192,57,43,0.2); border: 1px solid var(--red); color: var(--red); padding: 12px; text-align: center; margin-bottom: 20px; font-size: 0.85rem; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
+.form-group input { width: 100%; padding: 14px 16px; background: var(--dark); border: 1px solid var(--text-muted); color: #fff; font-size: 1rem; outline: none; }
+.form-group input:focus { border-color: var(--gold); }
+.btn { width: 100%; padding: 16px; background: var(--gold); color: #000; border: none; font-family: 'Oswald', sans-serif; font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.3s; }
+.btn:hover { background: var(--gold-light); }
+</style>
+</head>
+<body>
+<div class="login-box">
+  <h1>EPI <span>CUTS</span></h1>
+  <p>Admin Login</p>
+  <% if (locals.error) { %><div class="error"><%= error %></div><% } %>
+  <form method="POST" action="/admin/login">
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" name="username" required>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" name="password" required>
+    </div>
+    <button type="submit" class="btn">Sign In</button>
+  </form>
+</div>
+</body>
+</html>
