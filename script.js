@@ -240,6 +240,36 @@ fetch('/api/content.php?_=' + Date.now())
       if (el) el.textContent = map.services_svc4_desc;
     }
     renderIncludes('svc4Includes', map.services_svc4_includes);
+    // Populate service dropdown
+    if (map.services_dropdown_options) {
+      var sel = document.getElementById('serviceSelect');
+      if (sel) {
+        var label = map.services_dropdown_label || 'Select a Service';
+        var opts = map.services_dropdown_options.split('|');
+        sel.innerHTML = '<option value="" disabled selected>' + label + '</option>';
+        opts.forEach(function(o) {
+          var opt = document.createElement('option');
+          opt.textContent = o.trim();
+          sel.appendChild(opt);
+        });
+      }
+    }
+    // Update time slots
+    if (map.general_time_slots) {
+      timeSlots = map.general_time_slots.split('|').map(function(t) { return t.trim(); });
+      if (typeof populateTimes === 'function') {
+        var booked = [];
+        var date = document.getElementById('bookingDate');
+        if (date && date.value) {
+          fetch('/api/availability.php?date=' + date.value)
+            .then(function(r) { return r.json(); })
+            .then(function(b) { populateTimes(b); })
+            .catch(function() { populateTimes(); });
+        } else {
+          populateTimes();
+        }
+      }
+    }
     console.log('Content map:', map);
   })
   .catch(function(err) {
@@ -362,6 +392,8 @@ const timeSelect = document.getElementById('bookingTime');
 const dateHidden = document.getElementById('bookingDate');
 const timeHidden = document.getElementById('bookingTimeHidden');
 
+var timeSlots = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'];
+
 if (monthSelect && daySelect && timeSelect) {
     const months = [
         { value: '01', label: 'January' }, { value: '02', label: 'February' },
@@ -402,9 +434,8 @@ if (monthSelect && daySelect && timeSelect) {
 
     function populateTimes(bookedTimes) {
         timeSelect.innerHTML = '<option value="" disabled selected>Time</option>';
-        const slots = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'];
         const booked = bookedTimes || [];
-        slots.forEach(t => {
+        timeSlots.forEach(t => {
             const opt = document.createElement('option');
             opt.value = t;
             const [h, m] = t.split(':');
