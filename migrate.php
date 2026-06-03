@@ -21,6 +21,22 @@ $items = [
   ['general', 'logo', 'EPI'],
   ['general', 'logo_accent', 'CUTS'],
   ['general', 'hours', 'Tue - Sat: 9AM - 7PM | Sun: 10AM - 4PM | Mon: Closed'],
+  ['services', 'section_label', 'What We Offer'],
+  ['services', 'title', 'Our Services'],
+  ['services', 'subtitle', 'Quality grooming at fair prices. No hidden fees, no surprises.'],
+  ['services', 'svc1_name', 'Classic Haircut'],
+  ['services', 'svc1_desc', 'Consultation, shampoo, precision cut, and style. The works.'],
+  ['services', 'svc1_includes', 'Consultation|Shampoo & Cut|Hot Towel Finish'],
+  ['services', 'svc2_name', 'Haircut + Beard'],
+  ['services', 'svc2_desc', 'Our signature combo. Full haircut with beard sculpting and lineup.'],
+  ['services', 'svc2_includes', 'Everything in Classic|Beard Sculpting|Edge & Line-Up'],
+  ['services', 'svc2_badge', 'Most Popular'],
+  ['services', 'svc3_name', 'Hot Towel Shave'],
+  ['services', 'svc3_desc', 'Old-school straight razor shave. Pure relaxation.'],
+  ['services', 'svc3_includes', 'Hot Towel Treatment|Straight Razor Shave|Moisturizer Finish'],
+  ['services', 'svc4_name', 'Beard Trim'],
+  ['services', 'svc4_desc', 'Shape, sculpt, and detail your beard to perfection.'],
+  ['services', 'svc4_includes', 'Beard Shaping|Hot Oil Treatment|Edge Work'],
 ];
 $stmt = $pdo->prepare("INSERT IGNORE INTO content (section, `key`, value) VALUES (?, ?, ?)");
 foreach ($items as $row) $stmt->execute($row);

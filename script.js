@@ -181,7 +181,65 @@ fetch('/api/content.php?_=' + Date.now())
       const el = document.getElementById('contactSubtitle');
       if (el) el.textContent = map.contact_subtitle;
     }
-    // Debug: check if about features exist in API response
+    // Services section
+    function renderIncludes(id, val) {
+      var el = document.getElementById(id);
+      if (el && val) {
+        el.innerHTML = val.split('|').map(function(i) { return '<li>' + i.trim() + '</li>'; }).join('');
+      }
+    }
+    if (map.services_section_label) {
+      var el = document.getElementById('servicesLabel');
+      if (el) el.textContent = map.services_section_label;
+    }
+    if (map.services_title) {
+      var el = document.getElementById('servicesTitle');
+      if (el) el.textContent = map.services_title;
+    }
+    if (map.services_subtitle) {
+      var el = document.getElementById('servicesSubtitle');
+      if (el) el.textContent = map.services_subtitle;
+    }
+    if (map.services_svc1_name) {
+      var el = document.getElementById('svc1Name');
+      if (el) el.textContent = map.services_svc1_name;
+    }
+    if (map.services_svc1_desc) {
+      var el = document.getElementById('svc1Desc');
+      if (el) el.textContent = map.services_svc1_desc;
+    }
+    renderIncludes('svc1Includes', map.services_svc1_includes);
+    if (map.services_svc2_name) {
+      var el = document.getElementById('svc2Name');
+      if (el) el.textContent = map.services_svc2_name;
+    }
+    if (map.services_svc2_desc) {
+      var el = document.getElementById('svc2Desc');
+      if (el) el.textContent = map.services_svc2_desc;
+    }
+    renderIncludes('svc2Includes', map.services_svc2_includes);
+    if (map.services_svc2_badge) {
+      var el = document.getElementById('svc2Badge');
+      if (el) el.textContent = map.services_svc2_badge;
+    }
+    if (map.services_svc3_name) {
+      var el = document.getElementById('svc3Name');
+      if (el) el.textContent = map.services_svc3_name;
+    }
+    if (map.services_svc3_desc) {
+      var el = document.getElementById('svc3Desc');
+      if (el) el.textContent = map.services_svc3_desc;
+    }
+    renderIncludes('svc3Includes', map.services_svc3_includes);
+    if (map.services_svc4_name) {
+      var el = document.getElementById('svc4Name');
+      if (el) el.textContent = map.services_svc4_name;
+    }
+    if (map.services_svc4_desc) {
+      var el = document.getElementById('svc4Desc');
+      if (el) el.textContent = map.services_svc4_desc;
+    }
+    renderIncludes('svc4Includes', map.services_svc4_includes);
     console.log('Content map:', map);
   })
   .catch(function(err) {
