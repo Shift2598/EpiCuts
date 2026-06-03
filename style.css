@@ -105,6 +105,11 @@ img {
 .logo-icon {
     font-size: 1.4rem;
 }
+.icon-img {
+    height: 1em;
+    vertical-align: middle;
+    display: inline-block;
+}
 
 .nav-links {
     display: flex;
