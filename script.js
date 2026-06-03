@@ -103,11 +103,11 @@ staggerGrids.forEach(grid => {
 });
 
 // Load dynamic content from API
-fetch('/api/content.php')
+fetch('/api/content.php?_=' + Date.now())
   .then(res => res.json())
   .then(items => {
     const map = {};
-    items.forEach(item => { map[item.section + '_' + item.key] = item.value; });
+    items.forEach(item => { map[item.section + '_' + item['key']] = item.value; });
     if (map.general_logo) {
       document.querySelectorAll('#logoText, #heroLogo, #footerLogo').forEach(el => el.textContent = map.general_logo);
     }
