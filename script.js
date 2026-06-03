@@ -392,7 +392,18 @@ const timeSelect = document.getElementById('bookingTime');
 const dateHidden = document.getElementById('bookingDate');
 const timeHidden = document.getElementById('bookingTimeHidden');
 
-var timeSlots = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'];
+var timeSlots = ['9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM'];
+function to24h(t) {
+  var s = t.trim().toUpperCase();
+  var isPM = s.includes('PM');
+  var isAM = s.includes('AM');
+  var parts = s.replace(/[AP]M/g, '').trim().split(':');
+  var h = parseInt(parts[0]);
+  var m = parts[1] || '00';
+  if (isPM && h !== 12) h += 12;
+  if (isAM && h === 12) h = 0;
+  return String(h).padStart(2, '0') + ':' + m;
+}
 
 if (monthSelect && daySelect && timeSelect) {
     const months = [
@@ -437,16 +448,12 @@ if (monthSelect && daySelect && timeSelect) {
         const booked = bookedTimes || [];
         timeSlots.forEach(t => {
             const opt = document.createElement('option');
-            opt.value = t;
-            const [h, m] = t.split(':');
-            const hour = parseInt(h);
-            const ampm = hour >= 12 ? 'PM' : 'AM';
-            const display = `${hour > 12 ? hour - 12 : hour}:${m} ${ampm}`;
-            if (booked.includes(t)) {
+            opt.value = to24h(t);
+            if (booked.includes(opt.value)) {
                 opt.disabled = true;
-                opt.textContent = display + ' (Booked)';
+                opt.textContent = t + ' (Booked)';
             } else {
-                opt.textContent = display;
+                opt.textContent = t;
             }
             timeSelect.appendChild(opt);
         });

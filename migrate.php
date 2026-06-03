@@ -39,7 +39,7 @@ $items = [
   ['services', 'svc4_includes', 'Beard Shaping|Hot Oil Treatment|Edge Work'],
   ['services', 'dropdown_label', 'Select a Service'],
   ['services', 'dropdown_options', 'Haircut|Haircut + Beard|Hot Towel Shave|Beard Trim|Full Grooming Package'],
-  ['general', 'time_slots', '09:00|10:00|11:00|12:00|13:00|14:00|15:00|16:00|17:00|18:00'],
+  ['general', 'time_slots', '9:00 AM|10:00 AM|11:00 AM|12:00 PM|1:00 PM|2:00 PM|3:00 PM|4:00 PM|5:00 PM|6:00 PM'],
 ];
 $stmt = $pdo->prepare("INSERT IGNORE INTO content (section, `key`, value) VALUES (?, ?, ?)");
 foreach ($items as $row) $stmt->execute($row);
