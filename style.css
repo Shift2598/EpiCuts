@@ -259,8 +259,7 @@ section[id] {
 
 .hero-content h1 span {
     font-size: 6rem;
-    color: var(--gold);
-    display: block;
+    color: #fff;
     letter-spacing: 4px;
 }
 
