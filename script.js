@@ -254,22 +254,6 @@ fetch('/api/content.php?_=' + Date.now())
         });
       }
     }
-    // Update time slots
-    if (map.general_time_slots) {
-      timeSlots = map.general_time_slots.split('|').map(function(t) { return t.trim(); });
-      if (typeof populateTimes === 'function') {
-        var booked = [];
-        var date = document.getElementById('bookingDate');
-        if (date && date.value) {
-          fetch('/api/availability.php?date=' + date.value)
-            .then(function(r) { return r.json(); })
-            .then(function(b) { populateTimes(b); })
-            .catch(function() { populateTimes(); });
-        } else {
-          populateTimes();
-        }
-      }
-    }
     console.log('Content map:', map);
   })
   .catch(function(err) {
@@ -392,7 +376,7 @@ const timeSelect = document.getElementById('bookingTime');
 const dateHidden = document.getElementById('bookingDate');
 const timeHidden = document.getElementById('bookingTimeHidden');
 
-var timeSlots = ['9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM'];
+var timeSlots = ['9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM'];
 function to24h(t) {
   var s = t.trim().toUpperCase();
   var isPM = s.includes('PM');

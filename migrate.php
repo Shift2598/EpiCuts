@@ -39,9 +39,10 @@ $items = [
   ['services', 'svc4_includes', 'Beard Shaping|Hot Oil Treatment|Edge Work'],
   ['services', 'dropdown_label', 'Select a Service'],
   ['services', 'dropdown_options', 'Haircut|Haircut + Beard|Hot Towel Shave|Beard Trim|Full Grooming Package'],
-  ['general', 'time_slots', '9:00 AM|10:00 AM|11:00 AM|12:00 PM|1:00 PM|2:00 PM|3:00 PM|4:00 PM|5:00 PM|6:00 PM'],
+
 ];
 $stmt = $pdo->prepare("INSERT IGNORE INTO content (section, `key`, value) VALUES (?, ?, ?)");
 foreach ($items as $row) $stmt->execute($row);
+$pdo->exec("DELETE FROM content WHERE `key` = 'time_slots'");
 echo "Migrated: added " . count($items) . " content fields.<br>";
 echo 'Now <a href="/api/admin/content.php">go to admin Content</a> to edit them.';
