@@ -134,6 +134,53 @@ fetch('/api/content.php')
         el.innerHTML = (el.id === 'topHours' ? '&#9202; ' : '') + map.general_hours.replace(/\|/g, '<br>');
       });
     }
+    if (map.hero_subtext) {
+      const el = document.getElementById('heroSubtext');
+      if (el) el.textContent = map.hero_subtext;
+    }
+    if (map.about_title) {
+      const el = document.getElementById('aboutTitle');
+      if (el) el.textContent = map.about_title;
+    }
+    if (map.about_subtitle) {
+      const el = document.getElementById('aboutSubtitle');
+      if (el) el.textContent = map.about_subtitle;
+    }
+    if (map.about_text) {
+      const el = document.getElementById('aboutText');
+      if (el) el.textContent = map.about_text;
+    }
+    if (map.about_feature1) {
+      const el = document.getElementById('aboutFeature1');
+      if (el) el.textContent = map.about_feature1;
+    }
+    if (map.about_feature2) {
+      const el = document.getElementById('aboutFeature2');
+      if (el) el.textContent = map.about_feature2;
+    }
+    if (map.about_feature3) {
+      const el = document.getElementById('aboutFeature3');
+      if (el) el.textContent = map.about_feature3;
+    }
+    if (map.about_feature4) {
+      const el = document.getElementById('aboutFeature4');
+      if (el) el.textContent = map.about_feature4;
+    }
+    if (map.gallery_title) {
+      document.querySelectorAll('#galleryLabel, #galleryHeading').forEach(el => el.textContent = map.gallery_title);
+    }
+    if (map.gallery_subtitle) {
+      const el = document.getElementById('gallerySubtitle');
+      if (el) el.textContent = map.gallery_subtitle;
+    }
+    if (map.contact_title) {
+      const el = document.getElementById('contactLabel');
+      if (el) el.textContent = map.contact_title;
+    }
+    if (map.contact_subtitle) {
+      const el = document.getElementById('contactSubtitle');
+      if (el) el.textContent = map.contact_subtitle;
+    }
   })
   .catch(() => {});
 
