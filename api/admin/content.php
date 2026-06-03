@@ -4,9 +4,10 @@ require_once __DIR__ . '/header.php';
 
 $pdo = getDB();
 
+$saved = isset($_GET['saved']);
 if (isset($_POST['id'], $_POST['value'])) {
   $pdo->prepare("UPDATE content SET value = ?, updated_at = NOW() WHERE id = ?")->execute([$_POST['value'], (int)$_POST['id']]);
-  header('Location: content.php');
+  header('Location: content.php?saved=1');
   exit;
 }
 
@@ -19,6 +20,7 @@ foreach ($content as $item) {
 }
 ?>
 <div class="top-bar"><h1>Content</h1></div>
+<?php if ($saved): ?><div class="success">Content saved successfully!</div><?php endif; ?>
 <?php foreach ($grouped as $section => $items): ?>
 <div style="margin-bottom:32px">
   <h2 style="font-family:Oswald,sans-serif;font-size:1.2rem;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px"><?=htmlspecialchars(ucfirst($section))?></h2>
