@@ -7,7 +7,7 @@ $items = [
   ['about', 'title', 'More Than a Haircut.'],
   ['about', 'subtitle', "It's an Experience."],
   ['about', 'text', "At EpiCuts, every snip is intentional, every fade is precise, and every client leaves feeling sharper than they walked in. We blend traditional barbering with modern techniques to give you a cut that speaks confidence."],
-  ['about', 'feature1', '10+ Years Experience'],
+  ['about', 'feature1', '3+ Years Experience'],
   ['about', 'feature2', 'Certified Barbers'],
   ['about', 'feature3', 'Premium Products Only'],
   ['about', 'feature4', 'Walk-ins Welcome'],
