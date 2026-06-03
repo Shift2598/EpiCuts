@@ -448,12 +448,15 @@ if (monthSelect && daySelect && timeSelect) {
         const booked = bookedTimes || [];
         timeSlots.forEach(t => {
             const opt = document.createElement('option');
-            opt.value = to24h(t);
-            if (booked.includes(opt.value)) {
-                opt.disabled = true;
-                opt.textContent = t + ' (Booked)';
+            if (/[AP]M/i.test(t)) {
+                opt.value = to24h(t);
+                opt.textContent = booked.includes(opt.value) ? t + ' (Booked)' : t;
             } else {
-                opt.textContent = t;
+                opt.value = t;
+                var h = parseInt(t);
+                var ampm = h >= 12 ? 'PM' : 'AM';
+                var display = (h > 12 ? h - 12 : h) + t.slice(2) + ' ' + ampm;
+                opt.textContent = booked.includes(t) ? display + ' (Booked)' : display;
             }
             timeSelect.appendChild(opt);
         });
