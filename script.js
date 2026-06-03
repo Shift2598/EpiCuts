@@ -265,6 +265,20 @@ fetch('/api/content.php?_=' + Date.now())
         if (el) el.textContent = map['hero_stat_label' + i];
       }
     }
+    // Testimonials
+    function setT(id, val) { var e = document.getElementById(id); if (e && val) e.textContent = val; }
+    setT('testimonialsSectionLabel', map.testimonials_section_label);
+    setT('testimonialsTitle', map.testimonials_title);
+    setT('testimonialsSubtitle', map.testimonials_subtitle);
+    for (var i = 1; i <= 6; i++) {
+      setT('testimonial' + i + 'Text', map['testimonials_card' + i + '_text']);
+      setT('testimonial' + i + 'Name', map['testimonials_card' + i + '_name']);
+      setT('testimonial' + i + 'Role', map['testimonials_card' + i + '_role']);
+      if (map['testimonials_card' + i + '_name']) {
+        var a = document.getElementById('testimonial' + i + 'Avatar');
+        if (a) a.textContent = map['testimonials_card' + i + '_name'].charAt(0);
+      }
+    }
     console.log('Content map:', map);
   })
   .catch(function(err) {

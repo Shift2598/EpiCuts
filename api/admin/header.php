@@ -68,7 +68,7 @@ tr:hover{background:var(--dark)}
   <nav>
     <a href="index.php" class="<?=$active==='dashboard'?'active':''?>">Dashboard</a>
     <a href="bookings.php" class="<?=$active==='bookings'?'active':''?>">Bookings</a>
-    <a href="contacts.php" class="<?=$active==='contacts'?'active':''?>">Messages</a>
+
     <a href="gallery.php" class="<?=$active==='gallery'?'active':''?>">Gallery</a>
     <a href="content.php" class="<?=$active==='content'?'active':''?>">Content</a>
     <a href="email.php" class="<?=$active==='email'?'active':''?>">Email</a>
