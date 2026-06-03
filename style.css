@@ -110,6 +110,9 @@ img {
     vertical-align: middle;
     display: inline-block;
 }
+.logo .icon-img {
+    height: 2.2em;
+}
 
 .nav-links {
     display: flex;
