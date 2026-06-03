@@ -254,6 +254,17 @@ fetch('/api/content.php?_=' + Date.now())
         });
       }
     }
+    // Hero stats
+    for (var i = 1; i <= 3; i++) {
+      if (map['hero_stat_num' + i]) {
+        var el = document.getElementById('statNum' + i);
+        if (el) el.textContent = map['hero_stat_num' + i];
+      }
+      if (map['hero_stat_label' + i]) {
+        var el = document.getElementById('statLabel' + i);
+        if (el) el.textContent = map['hero_stat_label' + i];
+      }
+    }
     console.log('Content map:', map);
   })
   .catch(function(err) {
