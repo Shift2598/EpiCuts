@@ -151,20 +151,20 @@ fetch('/api/content.php?_=' + Date.now())
       if (el) el.textContent = map.about_text;
     }
     if (map.about_feature1) {
-      const el = document.getElementById('aboutFeature1');
-      if (el) el.textContent = map.about_feature1;
+      var el = document.getElementById('aboutFeature1');
+      if (el) { el.textContent = map.about_feature1; el.dataset.loaded = '1'; }
     }
     if (map.about_feature2) {
-      const el = document.getElementById('aboutFeature2');
-      if (el) el.textContent = map.about_feature2;
+      var el = document.getElementById('aboutFeature2');
+      if (el) { el.textContent = map.about_feature2; el.dataset.loaded = '1'; }
     }
     if (map.about_feature3) {
-      const el = document.getElementById('aboutFeature3');
-      if (el) el.textContent = map.about_feature3;
+      var el = document.getElementById('aboutFeature3');
+      if (el) { el.textContent = map.about_feature3; el.dataset.loaded = '1'; }
     }
     if (map.about_feature4) {
-      const el = document.getElementById('aboutFeature4');
-      if (el) el.textContent = map.about_feature4;
+      var el = document.getElementById('aboutFeature4');
+      if (el) { el.textContent = map.about_feature4; el.dataset.loaded = '1'; }
     }
     if (map.gallery_title) {
       document.querySelectorAll('#galleryLabel, #galleryHeading').forEach(el => el.textContent = map.gallery_title);
@@ -181,8 +181,20 @@ fetch('/api/content.php?_=' + Date.now())
       const el = document.getElementById('contactSubtitle');
       if (el) el.textContent = map.contact_subtitle;
     }
+    // Debug: check if about features exist in API response
+    console.log('Content map:', map);
   })
-  .catch(() => {});
+  .catch(function(err) {
+    console.error('Content fetch error:', err);
+    var dbg = document.getElementById('debugContent');
+    if (!dbg) {
+      dbg = document.createElement('div');
+      dbg.id = 'debugContent';
+      dbg.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:red;color:#fff;padding:10px;z-index:9999';
+      document.body.appendChild(dbg);
+    }
+    dbg.textContent = 'Content API error: ' + err.message;
+  });
 
 // Form submission - native POST (bypasses Infinity Free security)
 const contactForm = document.getElementById('contactForm');
