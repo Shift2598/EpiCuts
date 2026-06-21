@@ -392,6 +392,10 @@ fetch('/api/gallery.php')
             <div class="gallery-item">
                 <div class="gallery-image">
                     <img src="${img.image_url}" alt="${img.title}" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-title">${img.title}</span>
+                        ${img.subtitle ? '<span class="gallery-subtitle">' + img.subtitle + '</span>' : ''}
+                    </div>
                 </div>
             </div>
         `).join('');

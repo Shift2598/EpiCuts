@@ -752,7 +752,33 @@ section[id] {
 }
 
 .gallery-overlay {
-    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.85));
+    padding: 40px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+.gallery-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.gallery-subtitle {
+    font-size: 0.8rem;
+    color: #ccc;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .gallery-overlay span {
