@@ -756,7 +756,6 @@ section[id] {
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(transparent, rgba(0,0,0,0.85));
     padding: 40px 16px 16px;
     display: flex;
     flex-direction: column;
