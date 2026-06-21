@@ -305,11 +305,11 @@ contactForm.setAttribute('method', 'POST');
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
-        e.preventDefault();
         const id = this.getAttribute('href');
         if (id === '#') return;
         const target = document.querySelector(id);
         if (target) {
+            e.preventDefault();
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     });
