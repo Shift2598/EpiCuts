@@ -279,6 +279,10 @@ fetch('/api/content.php?_=' + Date.now())
         if (a) a.textContent = map['testimonials_card' + i + '_name'].charAt(0);
       }
     }
+    // Social links
+    if (map.social_instagram) { var el = document.getElementById('socialInstagram'); if (el) el.href = map.social_instagram; }
+    if (map.social_facebook) { var el = document.getElementById('socialFacebook'); if (el) el.href = map.social_facebook; }
+    if (map.social_tiktok) { var el = document.getElementById('socialTiktok'); if (el) el.href = map.social_tiktok; }
     console.log('Content map:', map);
   })
   .catch(function(err) {

@@ -71,6 +71,7 @@ tr:hover{background:var(--dark)}
 
     <a href="gallery.php" class="<?=$active==='gallery'?'active':''?>">Gallery</a>
     <a href="content.php" class="<?=$active==='content'?'active':''?>">Content</a>
+    <a href="social.php" class="<?=$active==='social'?'active':''?>">Social</a>
     <a href="email.php" class="<?=$active==='email'?'active':''?>">Email</a>
   </nav>
   <div class="logout"><a href="logout.php">Logout</a></div>
