@@ -373,6 +373,11 @@ popupOverlay.addEventListener('click', (e) => {
     }
 });
 
+// Cat ad click opens booking popup
+document.querySelector('.cat-ad')?.addEventListener('click', () => {
+    document.getElementById('popupOverlay')?.classList.add('active');
+});
+
 // Auto popup after 15 seconds
 setTimeout(() => {
     popupOverlay.classList.add('active');

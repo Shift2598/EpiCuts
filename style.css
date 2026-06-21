@@ -1479,3 +1479,43 @@ section[id] {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--gold-light);
 }
+
+.cat-ad {
+    position: fixed;
+    bottom: 80px;
+    right: -200px;
+    background: var(--gold);
+    color: #000;
+    padding: 8px 16px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 999;
+    cursor: pointer;
+    animation: catRoll 10s ease-in-out infinite;
+    animation-delay: 8s;
+    white-space: nowrap;
+}
+.cat-emoji {
+    font-size: 1.4rem;
+    display: inline-block;
+    animation: catSpin 0.6s linear infinite;
+}
+.cat-text {
+    font-weight: 600;
+}
+@keyframes catRoll {
+    0% { right: -250px; }
+    10% { right: 20px; }
+    40% { right: 20px; }
+    50% { right: -250px; }
+    100% { right: -250px; }
+}
+@keyframes catSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
